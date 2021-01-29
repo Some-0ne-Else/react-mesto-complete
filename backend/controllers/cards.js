@@ -46,7 +46,7 @@ module.exports.likeCard = (req, res, next) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
-  )
+  ).populate(['likes'])
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Нет такой карточки в БД');
@@ -65,11 +65,12 @@ module.exports.dislikeCard = (req, res, next) => {
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
-  ).then((user) => {
-    if (!user) {
-      throw new NotFoundError('Нет такой карточки в БД');
-    } return res.send({ data: user });
-  })
+  ).populate(['likes'])
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('Нет такой карточки в БД');
+      } return res.send({ data: user });
+    })
     .catch((err) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Передан некорректный идентификатор');

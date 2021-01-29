@@ -1,7 +1,5 @@
 import {
-  token,
   baseUrl,
-  cohort,
   baseAuthUrl,
   signUpPostfix,
   signInPostfix,
@@ -10,15 +8,12 @@ import {
 
 class Api {
   constructor(
-    token,
     baseUrl,
-    cohort,
     baseAuthUrl,
     signUpPostfix,
     signInPostfix,
     userInfoPostfix
   ) {
-    this._token = token;
     this._baseUrl = baseUrl;
     this._baseAuthUrl = baseAuthUrl;
     this._signUpPostfix = signUpPostfix;
@@ -27,10 +22,9 @@ class Api {
   }
 
   signIn(email, password) {
-    return fetch(`${this._baseAuthUrl}${this._signInPostfix}`, {
+    return fetch(`${this._baseAuthUrl}/signin`, {
       method: "POST",
       headers: {
-        // authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -131,11 +125,11 @@ class Api {
       });
   }
 
-  editProfile(urlPostfix, name, about) {
-    return fetch(`${this._baseUrl}${urlPostfix}`, {
+  editProfile(jwt, name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: this._token,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -191,11 +185,11 @@ class Api {
       .catch((err) => console.log(err));
   }
 
-  updateAvatar(urlPostfix, link) {
-    return fetch(`${this._baseUrl}${urlPostfix}/avatar`, {
+  updateAvatar(jwt, link) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
-        authorization: this._token,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -215,10 +209,12 @@ class Api {
   }
 }
 
+// const handler = (res) => {if (result.ok) {
+//    return result.json();}
+//     else { return Promise.reject(`Ошибка: ${result.status}`);}}
+
 const api = new Api(
-  token,
   baseUrl,
-  cohort,
   baseAuthUrl,
   signUpPostfix,
   signInPostfix,

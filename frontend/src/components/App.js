@@ -14,7 +14,6 @@ import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip.js";
 import api from "../utils/Api.js";
 import { CardsContext } from "../contexts/CardsContext.js";
-import { userInfoPostfix, cardsPostfix } from "../utils/constants.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function App() {
@@ -41,46 +40,48 @@ function App() {
         onLogin(res.data.email);
       });
     }
-    api
-      .getUserInfo(localStorage.getItem("jwt"))
-      .then((userInfo) => {
-        setCurrentUser(userInfo.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setIsLoading(true);
-
-    api
-      .getCards(localStorage.getItem("jwt"))
-      .then((dataCards) => {
-        setCards(
-          dataCards.data.map((item) => ({
-            _id: item._id,
-            name: item.name,
-            link: item.link,
-            likes: item.likes,
-            ownerId: item.owner._id,
-          }))
-        );
-
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setCurrentUser, setCards, setIsLoading]);
+    if (loggedIn) {
+      api
+        .getUserInfo(localStorage.getItem("jwt"))
+        .then((userInfo) => {
+          setCurrentUser(userInfo.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setIsLoading(true);
+      api
+        .getCards(localStorage.getItem("jwt"))
+        .then((dataCards) => {
+          setCards(
+            dataCards.data.map((item) => ({
+              _id: item._id,
+              name: item.name,
+              link: item.link,
+              likes: item.likes,
+              ownerId: item.owner._id,
+            }))
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [setCurrentUser, setCards, setIsLoading, loggedIn]);
 
   function handleCardLike(card) {
+    console.log("cards before", cards);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     console.log(isLiked);
     api
       .likeCard(localStorage.getItem("jwt"), card._id, isLiked)
       .then((newCard) => {
-        console.log(newCard);
+        console.log(newCard.data);
         const newCards = cards.map((c) =>
           c._id === card._id ? newCard.data : c
         );
+        console.log("newCards", newCards);
         setCards(newCards);
       })
       .catch((err) => {
@@ -144,10 +145,10 @@ function App() {
   }
   function handleUpdateUser({ name, about }) {
     api
-      .editProfile(userInfoPostfix, name, about)
+      .editProfile(localStorage.getItem("jwt"), name, about)
       .then((res) => res.json())
-      .then((data) => {
-        setCurrentUser(data);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -157,9 +158,9 @@ function App() {
 
   function handleUpdateAvatar({ avatar }) {
     api
-      .updateAvatar(userInfoPostfix, avatar)
-      .then((result) => {
-        setCurrentUser(result);
+      .updateAvatar(localStorage.getItem("jwt"), avatar)
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err));

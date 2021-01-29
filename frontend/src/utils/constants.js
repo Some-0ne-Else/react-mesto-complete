@@ -18,7 +18,7 @@ const cohort = "cohort-12";
 //const baseUrl = "https://mesto.nomoreparties.co/v1/";
 const baseUrl = "http://localhost:3000";
 const userInfoPostfix = "/users/me";
-const cardsPostfix = "/cards";
+
 /* auth additional config */
 //const baseAuthUrl = "https://auth.nomoreparties.co";
 const baseAuthUrl = "http://localhost:3000";
@@ -49,11 +49,8 @@ export {
   popupAvatar,
   cardTemplate,
   configValidation,
-  token,
-  cohort,
   baseUrl,
   userInfoPostfix,
-  cardsPostfix,
   baseAuthUrl,
   signUpPostfix,
   signInPostfix,
