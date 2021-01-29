@@ -13,13 +13,15 @@ const popupAvatar = document.querySelector("#link");
 /* config */
 const cardTemplate = ".element__template";
 const token = "91f20ff1-daca-4d5c-889a-e104c276a690";
-const idOnServer = "a2ce638f0c69119d45d04bb7";
+//const idOnServer = "a2ce638f0c69119d45d04bb7";
 const cohort = "cohort-12";
-const baseUrl = "https://mesto.nomoreparties.co/v1/";
+//const baseUrl = "https://mesto.nomoreparties.co/v1/";
+const baseUrl = "http://localhost:3000";
 const userInfoPostfix = "/users/me";
 const cardsPostfix = "/cards";
 /* auth additional config */
-const baseAuthUrl = "https://auth.nomoreparties.co";
+//const baseAuthUrl = "https://auth.nomoreparties.co";
+const baseAuthUrl = "http://localhost:3000";
 const signUpPostfix = "/signup";
 const signInPostfix = "/signin";
 /*validation const */
@@ -52,7 +54,6 @@ export {
   baseUrl,
   userInfoPostfix,
   cardsPostfix,
-  idOnServer,
   baseAuthUrl,
   signUpPostfix,
   signInPostfix,

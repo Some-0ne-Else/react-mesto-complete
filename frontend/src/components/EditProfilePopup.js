@@ -7,9 +7,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setAbout(currentUser.about);
+    if (localStorage.getItem("jwt")) {
+      setName(currentUser.name);
+      setAbout(currentUser.about);
+    }
   }, [currentUser, setAbout, setName]);
+
   function handleNameChange(e) {
     setName(e.target.value);
   }

@@ -5,8 +5,12 @@ function InfoTooltip({ isOpen, status, message, onClose }) {
   return (
     <section className={`info-tooltip ${isOpen && "info-tooltip_opened"}`}>
       <div className="info-tooltip__container">
-        {status && <img className="info-tooltip__image" src={success} />}
-        {!status && <img className="info-tooltip__image" src={failure} />}
+        {status && (
+          <img className="info-tooltip__image" src={success} alt="Успешно" />
+        )}
+        {!status && (
+          <img className="info-tooltip__image" src={failure} alt="Ошибка" />
+        )}
         <h2 className="info-tooltip__message">{message}</h2>
         <button
           type="button"

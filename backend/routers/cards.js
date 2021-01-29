@@ -36,17 +36,17 @@ router.put('/:cardId/likes', celebrate({
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
   }).unknown(true),
-  params: Joi.object().keys({
-    id: Joi.string().hex().max(24),
-  }),
+  // params: Joi.object().keys({
+  //   id: Joi.string().hex().max(24),
+  // }),
 }), auth, likeCard);
 
 router.delete('/:cardId/likes', celebrate({
   headers: Joi.object().keys({
     authorization: Joi.string().required(),
   }).unknown(true),
-  params: Joi.object().keys({
-    id: Joi.string().hex().max(24),
-  }),
+  // params: Joi.object().keys({
+  //   id: Joi.string().hex().max(24),
+  // }),
 }), auth, dislikeCard);
 module.exports = router;

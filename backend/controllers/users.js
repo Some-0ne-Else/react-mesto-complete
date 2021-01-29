@@ -71,6 +71,15 @@ module.exports.updateProfile = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.getUserInfo = (req, res, next) => {
+  console.log(req);
+  const userId = req.user._id;
+  User.findOne({ _id: userId })
+    .then((user) => { res.send({ data: user }); })
+    .catch((err) => { if (err.name === 'ValidationError') { throw new BadRequestError(`Переданы некорректные данные: ${err.message}`); } throw new Error(); })
+    .catch(next);
+};
+
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const userId = req.user._id;

@@ -35,12 +35,52 @@ function App() {
   const [currentUserEmail, setcurrentUserEmail] = React.useState("");
   const history = useHistory();
 
+  React.useEffect(() => {
+    if (localStorage.getItem("jwt")) {
+      api.checkToken(localStorage.getItem("jwt")).then((res) => {
+        onLogin(res.data.email);
+      });
+    }
+    api
+      .getUserInfo(localStorage.getItem("jwt"))
+      .then((userInfo) => {
+        setCurrentUser(userInfo.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setIsLoading(true);
+
+    api
+      .getCards(localStorage.getItem("jwt"))
+      .then((dataCards) => {
+        setCards(
+          dataCards.data.map((item) => ({
+            _id: item._id,
+            name: item.name,
+            link: item.link,
+            likes: item.likes,
+            ownerId: item.owner._id,
+          }))
+        );
+
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setCurrentUser, setCards, setIsLoading]);
+
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    console.log(isLiked);
     api
-      .likeCard(cardsPostfix, card._id, isLiked)
+      .likeCard(localStorage.getItem("jwt"), card._id, isLiked)
       .then((newCard) => {
-        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+        console.log(newCard);
+        const newCards = cards.map((c) =>
+          c._id === card._id ? newCard.data : c
+        );
         setCards(newCards);
       })
       .catch((err) => {
@@ -50,7 +90,7 @@ function App() {
   function handleCardDelete(card) {
     /* cards state updated only in case of response success */
     api
-      .deleteCard(`${cardsPostfix}/${card._id}`)
+      .deleteCard(localStorage.getItem("jwt"), card._id)
       .then(() => setCards(cards.filter((c) => c._id !== card._id)))
       .catch((err) => console.log(err));
   }
@@ -127,49 +167,13 @@ function App() {
 
   function handleAddPlaceSubmit({ name, url }) {
     api
-      .postCard(cardsPostfix, name, url)
+      .postCard(localStorage.getItem("jwt"), name, url)
       .then((newCard) => {
-        setCards([...cards, newCard]);
+        setCards([...cards, newCard.data]);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
-  React.useEffect(() => {
-    api
-      .fetchData(userInfoPostfix)
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        //console.log(userInfo._id)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setIsLoading(true);
-    api
-      .fetchData(cardsPostfix)
-      .then((dataCards) => {
-        setCards(
-          dataCards.map((item) => ({
-            _id: item._id,
-            name: item.name,
-            link: item.link,
-            likes: item.likes,
-            ownerId: item.owner._id,
-          }))
-        );
-
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (localStorage.getItem("jwt")) {
-      api.checkToken(localStorage.getItem("jwt")).then((res) => {
-        onLogin(res.data.email);
-      });
-    }
-  }, [setCurrentUser, setCards, setIsLoading]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

@@ -13,6 +13,9 @@ function Card({
   onCardDelete,
   card,
 }) {
+  // React.useEffect(() =>
+  // console.log(ownerId,currentUser) )
+
   const isOwn = ownerId === currentUser;
   const isLiked = likes.some((i) => i._id === currentUser);
   const elementLikeButtonClassName = `element__like ${

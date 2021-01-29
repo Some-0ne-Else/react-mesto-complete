@@ -19,7 +19,7 @@ class Api {
     userInfoPostfix
   ) {
     this._token = token;
-    this._baseUrl = `${baseUrl}${cohort}`;
+    this._baseUrl = baseUrl;
     this._baseAuthUrl = baseAuthUrl;
     this._signUpPostfix = signUpPostfix;
     this._signInPostfix = signInPostfix;
@@ -30,7 +30,7 @@ class Api {
     return fetch(`${this._baseAuthUrl}${this._signInPostfix}`, {
       method: "POST",
       headers: {
-        authorization: this._token,
+        // authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -48,7 +48,6 @@ class Api {
     return fetch(`${this._baseAuthUrl}${this._signUpPostfix}`, {
       method: "POST",
       headers: {
-        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -93,6 +92,45 @@ class Api {
         console.log(err);
       });
   }
+
+  getUserInfo(jwt) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => {
+        if (result.ok) {
+          return result.json();
+        } else {
+          return Promise.reject(`Ошибка: ${result.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getCards(jwt) {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((result) => {
+        if (result.ok) {
+          return result.json();
+        } else {
+          return Promise.reject(`Ошибка: ${result.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   editProfile(urlPostfix, name, about) {
     return fetch(`${this._baseUrl}${urlPostfix}`, {
       method: "PATCH",
@@ -109,11 +147,11 @@ class Api {
     });
   }
 
-  postCard(urlPostfix, name, link) {
-    return fetch(`${this._baseUrl}${urlPostfix}`, {
+  postCard(jwt, name, link) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
-        authorization: this._token,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -127,24 +165,25 @@ class Api {
       });
   }
 
-  deleteCard(urlPostfix) {
-    return fetch(`${this._baseUrl}${urlPostfix}`, {
+  deleteCard(jwt, cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: {
-        authorization: this._token,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
     }).catch((err) => {
       console.log(err);
     });
   }
-  likeCard(urlPostfix, cardId, isLiked) {
+
+  likeCard(jwt, cardId, isLiked) {
     let methodValue;
     isLiked ? (methodValue = "DELETE") : (methodValue = "PUT");
-    return fetch(`${this._baseUrl}${urlPostfix}/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes/`, {
       method: methodValue,
       headers: {
-        authorization: this._token,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
     })

@@ -15,6 +15,7 @@ function Login({ onRegistrationSuccess, onRegistrationFail }) {
   function handleSubmitForm(e) {
     e.preventDefault();
     api.signUp(email, password).then((res) => {
+      console.log(res);
       res.data ? onRegistrationSuccess(res.data.email) : onRegistrationFail();
     });
   }
@@ -33,7 +34,6 @@ function Login({ onRegistrationSuccess, onRegistrationFail }) {
           maxLength="30"
           pattern="[a-zA-ZА-ЯЁа-яё\s\-]+[^\s\-]+"
           required
-          noValidate
         />
         <input
           type="password"
@@ -43,7 +43,6 @@ function Login({ onRegistrationSuccess, onRegistrationFail }) {
           id="password"
           placeholder="Пароль"
           required
-          noValidate
         />
         <button type="submit" className="login__submit-button">
           Зарегистрироваться

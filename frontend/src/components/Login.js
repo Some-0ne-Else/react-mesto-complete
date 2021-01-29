@@ -19,6 +19,7 @@ function Login({ onLogin, onAuthFail }) {
       if (res.token) {
         localStorage.setItem("jwt", res.token);
         api.checkToken(res.token).then((res) => {
+          console.log(res);
           onLogin(res.data.email);
         });
       } else onAuthFail();
@@ -39,7 +40,6 @@ function Login({ onLogin, onAuthFail }) {
           maxLength="30"
           pattern="[a-zA-ZА-ЯЁа-яё\s\-]+[^\s\-]+"
           required
-          noValidate
         />
         <input
           type="password"
@@ -49,7 +49,6 @@ function Login({ onLogin, onAuthFail }) {
           id="password"
           placeholder="Пароль"
           required
-          noValidate
         />
         <button type="submit" className="login__submit-button">
           Войти
