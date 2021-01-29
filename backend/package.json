@@ -1,0 +1,40 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "Practical work 12-15 by yandex Praktikum",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "celebrate": "^13.0.3",
+    "express": "^4.17.1",
+    "express-winston": "^4.0.5",
+    "joi": "^17.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "validator": "^13.1.17",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write './**/*.{js,css}' && git add ."
+    }
+  },
+  "keywords": [],
+  "author": "Some0neElse cyber-def@yandex.ru",
+  "license": "ISC"
+}

@@ -1,0 +1,29 @@
+.profile__vocation {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin: 0;
+  transition: ease 0.5s;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__vocation {
+    margin: 8px auto 0;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .profile__vocation {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile__vocation {
+    margin: 0 auto 0;
+  }
+}

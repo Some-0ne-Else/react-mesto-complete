@@ -1,0 +1,17 @@
+@keyframes rotation_square {
+  0% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(345deg);
+  }
+}
+
+.spinner {
+  background-image: url("../../images/loading.png");
+  animation: rotation_square 5s infinite linear;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}

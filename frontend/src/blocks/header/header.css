@@ -1,0 +1,26 @@
+@import url("./__logo/header__logo.css");
+@import url("./__wrapper/header__wrapper.css");
+@import url("./__user-email/header__user-email.css");
+@import url("./__auth/header__auth.css");
+
+.header {
+  display: flex;
+  max-width: 882px;
+  height: 119px;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.7);
+  margin: 0 auto;
+  transition: ease 0.5s;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    margin: 0 27px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .header {
+    margin: 0 auto;
+  }
+}

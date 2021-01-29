@@ -1,0 +1,7 @@
+.popup__container-enl {
+  max-width: 75vw;
+  max-height: 75vh;
+  position: absolute;
+  display: flex;
+  transition: ease 0.5s;
+}
