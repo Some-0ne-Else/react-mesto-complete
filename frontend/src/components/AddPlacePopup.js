@@ -6,7 +6,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
-    console.log("submited");
     onAddPlace({ name, url });
   }
   function handleNameChange(e) {

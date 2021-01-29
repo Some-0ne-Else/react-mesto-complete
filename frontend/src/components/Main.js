@@ -15,7 +15,7 @@ function Main({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const cards = React.useContext(CardsContext);
-
+  console.log("render main");
   return (
     <main className="content">
       <section className="profile">
