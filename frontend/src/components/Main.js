@@ -3,8 +3,8 @@ import Card from "./Card.js";
 import Spinner from "./Spinner.js";
 import editButtonImage from "../images/profile__edit-button_image.svg";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { CardsContext } from "../contexts/CardsContext.js";
 function Main({
-  cards,
   onEditAvatar,
   onEditProfile,
   onAddPlace,
@@ -14,6 +14,7 @@ function Main({
   isLoading,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
+  const cards = React.useContext(CardsContext);
 
   return (
     <main className="content">
@@ -52,7 +53,7 @@ function Main({
               alt={card.name}
               key={card._id}
               currentUser={currentUser._id}
-              ownerId={card.ownerId}
+              ownerId={card.owner}
               likes={card.likes}
               likeCounter={card.likes.length}
               onCardClick={onCardClick}

@@ -1,28 +1,12 @@
-import {
-  baseUrl,
-  baseAuthUrl,
-  signUpPostfix,
-  signInPostfix,
-  userInfoPostfix,
-} from "./constants.js";
+import { baseUrl } from "./constants.js";
 
 class Api {
-  constructor(
-    baseUrl,
-    baseAuthUrl,
-    signUpPostfix,
-    signInPostfix,
-    userInfoPostfix
-  ) {
+  constructor(baseUrl, userInfoPostfix) {
     this._baseUrl = baseUrl;
-    this._baseAuthUrl = baseAuthUrl;
-    this._signUpPostfix = signUpPostfix;
-    this._signInPostfix = signInPostfix;
-    this._userInfoPostfix = userInfoPostfix;
   }
 
   signIn(email, password) {
-    return fetch(`${this._baseAuthUrl}/signin`, {
+    return fetch(`${this._baseUrl}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +23,7 @@ class Api {
   }
 
   signUp(email, password) {
-    return fetch(`${this._baseAuthUrl}${this._signUpPostfix}`, {
+    return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +40,7 @@ class Api {
   }
 
   checkToken(jwt) {
-    return fetch(`${this._baseAuthUrl}${this._userInfoPostfix}`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -213,12 +197,6 @@ class Api {
 //    return result.json();}
 //     else { return Promise.reject(`Ошибка: ${result.status}`);}}
 
-const api = new Api(
-  baseUrl,
-  baseAuthUrl,
-  signUpPostfix,
-  signInPostfix,
-  userInfoPostfix
-);
+const api = new Api(baseUrl);
 
 export default api;

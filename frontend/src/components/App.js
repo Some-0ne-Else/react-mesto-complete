@@ -50,6 +50,7 @@ function App() {
           console.log(err);
         });
       setIsLoading(true);
+
       api
         .getCards(localStorage.getItem("jwt"))
         .then((dataCards) => {
@@ -59,7 +60,7 @@ function App() {
               name: item.name,
               link: item.link,
               likes: item.likes,
-              ownerId: item.owner._id,
+              owner: item.owner._id,
             }))
           );
         })
@@ -68,20 +69,16 @@ function App() {
         })
         .finally(() => setIsLoading(false));
     }
-  }, [setCurrentUser, setCards, setIsLoading, loggedIn]);
+  }, [loggedIn, setCards]);
 
   function handleCardLike(card) {
-    console.log("cards before", cards);
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    console.log(isLiked);
     api
       .likeCard(localStorage.getItem("jwt"), card._id, isLiked)
       .then((newCard) => {
-        console.log(newCard.data);
         const newCards = cards.map((c) =>
           c._id === card._id ? newCard.data : c
         );
-        console.log("newCards", newCards);
         setCards(newCards);
       })
       .catch((err) => {

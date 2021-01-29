@@ -1,26 +1,8 @@
-/* page elements const */
-const editButton = document.querySelector(".profile__edit-button");
-const addButton = document.querySelector(".profile__add-button");
-const editAvatar = document.querySelector(".profile__avatar-edit");
-const profileFullName = document.querySelector(".profile__full-name");
-const profileVocation = document.querySelector(".profile__vocation");
-const profileAvatar = document.querySelector(".profile__avatar");
-/* popup const */
-const popupFullName = document.querySelector("#full-name");
-const popupVocation = document.querySelector("#vocation");
-const popupAvatar = document.querySelector("#link");
-
 /* config */
 const cardTemplate = ".element__template";
-const token = "91f20ff1-daca-4d5c-889a-e104c276a690";
-//const idOnServer = "a2ce638f0c69119d45d04bb7";
-const cohort = "cohort-12";
-//const baseUrl = "https://mesto.nomoreparties.co/v1/";
 const baseUrl = "http://localhost:3000";
-const userInfoPostfix = "/users/me";
 
 /* auth additional config */
-//const baseAuthUrl = "https://auth.nomoreparties.co";
 const baseAuthUrl = "http://localhost:3000";
 const signUpPostfix = "/signup";
 const signInPostfix = "/signin";
@@ -38,19 +20,9 @@ const configValidation = {
 // const avatarFormValidation = new FormValidator(configValidation, ".popup__container_avatar");
 
 export {
-  editButton,
-  addButton,
-  editAvatar,
-  profileFullName,
-  profileVocation,
-  profileAvatar,
-  popupFullName,
-  popupVocation,
-  popupAvatar,
   cardTemplate,
   configValidation,
   baseUrl,
-  userInfoPostfix,
   baseAuthUrl,
   signUpPostfix,
   signInPostfix,
